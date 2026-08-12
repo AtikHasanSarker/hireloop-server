@@ -53,6 +53,13 @@ async function run() {
     })
 
 
+    //company related api
+    app.post('/api/companies', async(req, res)=>{
+      const company = req.body
+      const result = await companyCollection.insertOne(company)
+      res.send(result)
+    })
+
     app.listen(port, () => {
       console.log(`Express server is running on http://localhost:${port}`);
     });
