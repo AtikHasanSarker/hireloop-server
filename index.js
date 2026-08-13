@@ -60,6 +60,12 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/api/companies', async(req, res)=>{
+      const cursor = companyCollection.find({})
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+
     app.listen(port, () => {
       console.log(`Express server is running on http://localhost:${port}`);
     });
