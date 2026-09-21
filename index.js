@@ -60,11 +60,22 @@ async function run() {
       res.send(result)
     })
 
-    app.get('/api/companies', async(req, res)=>{
-      const cursor = companyCollection.find({})
-      const result = await cursor.toArray()
-      res.send(result)
-    })
+app.get("/api/my/company", async (req, res) => {
+  try {
+    const { recruiterId } = req.query;
+
+    if (!recruiterId) {
+      return res.status(400).json({ message: "recruiterId required" });
+    }
+
+    const result = await companyCollection.findOne({ recruiterId });
+
+    res.json(result); 
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "server error" });
+  }
+});
 
     app.listen(port, () => {
       console.log(`Express server is running on http://localhost:${port}`);
