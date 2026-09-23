@@ -66,6 +66,13 @@ async function run() {
 
 
     //company related api
+    app.get("/api/companies", async (req, res) => {
+      const cursor = companyCollection.find();
+      const result = await cursor.toArray();
+      res.json(result);
+    });
+
+
     app.post('/api/companies', async(req, res)=>{
       const company = req.body;
       const newCompany = {
