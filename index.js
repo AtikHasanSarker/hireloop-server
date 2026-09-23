@@ -26,10 +26,18 @@ async function run() {
     console.log(`Connected to MongoDB database: ${db.databaseName}`);
     const jobCollection = db.collection('jobs')
     const companyCollection = db.collection('companies')
+    const userCollection = db.collection('user')
 
     app.get("/", (req, res) => {
       res.send("Hireloop server is running");
     });
+
+
+    app.get('/api/users', async(req, res)=>{
+      const cursor = userCollection.find()
+      const result = await cursor.toArray()
+      res.json(result)
+    })
 
     app.get('/api/jobs', async(req, res)=>{
       const query = {}
@@ -42,7 +50,7 @@ async function run() {
       }
       const cursor = jobCollection.find(query)
       const result = await cursor.toArray()
-      res.send(result)
+      res.json(result)
 
     })
 
@@ -53,7 +61,7 @@ async function run() {
           createdAt: new Date(),
         }
         const result = await jobCollection.insertOne(newJob)
-        res.send(result)
+        res.json(result)
     })
 
 
