@@ -74,7 +74,14 @@ async function run() {
 
     //application related api
     app.get("/api/applications", async (req, res) => {
-      const cursor = applicationCollection.find();
+      const query = {};
+      if (req.query.applicantId) {
+        query.applicantId = req.query.applicantId;
+      }
+      if (req.query.companyId) {
+        query.companyId = req.query.companyId;
+      }
+      const cursor = applicationCollection.find(query);
       const result = await cursor.toArray();
       res.json(result);
     });
