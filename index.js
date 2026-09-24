@@ -27,6 +27,7 @@ async function run() {
     const jobCollection = db.collection('jobs')
     const companyCollection = db.collection('companies')
     const userCollection = db.collection('user')
+    const applicationCollection = db.collection('applications')
 
     app.get("/", (req, res) => {
       res.send("Hireloop server is running");
@@ -70,6 +71,23 @@ async function run() {
         res.json(result)
     })
 
+
+    //application related api
+    app.get("/api/applications", async (req, res) => {
+      const cursor = applicationCollection.find();
+      const result = await cursor.toArray();
+      res.json(result);
+    });
+
+    app.post('/api/applications', async(req, res)=>{
+      const application = req.body;
+      const newApplication = {
+        ...application,
+        createdAt: new Date(),
+      }
+      const result = await applicationCollection.insertOne(newApplication)
+      res.send(result)
+    })
 
     //company related api
     app.get("/api/companies", async (req, res) => {
