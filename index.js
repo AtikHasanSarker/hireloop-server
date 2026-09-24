@@ -54,6 +54,12 @@ async function run() {
 
     })
 
+    app.get('/api/jobs/:id', async(req, res)=>{
+      const id = req.params.id
+      const result = await jobCollection.findOne({_id: new ObjectId(id)})
+      res.json(result)
+    })
+
     app.post('/api/jobs', async(req, res)=> {
         const job = req.body;
         const newJob = {
