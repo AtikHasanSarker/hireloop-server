@@ -30,7 +30,7 @@ async function run() {
     const applicationCollection = db.collection('applications')
 
     app.get("/", (req, res) => {
-      res.send("Hireloop server is running");
+      res.send("JobNest server is running");
     });
 
 
